@@ -1,9 +1,6 @@
 
-_ReSharper.AgileWallaby.Ehcache/BuildScriptCache
 _ReSharper.AgileWallaby.Ehcache
-AgileWallaby.Ehcache.Net2/bin
-AgileWallaby.Ehcache.Net2/obj
-AgileWallaby.Ehcache.Test/bin
+_ReSharper.AgileWallaby.Ehcache
 obj
 bin
 *.suo
