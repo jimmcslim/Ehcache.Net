@@ -1,0 +1,11 @@
+
+_ReSharper.AgileWallaby.Ehcache/BuildScriptCache
+_ReSharper.AgileWallaby.Ehcache
+AgileWallaby.Ehcache.Net2/bin
+AgileWallaby.Ehcache.Net2/obj
+AgileWallaby.Ehcache.Test/bin
+obj
+bin
+*.suo
+TestResults
+*.user
