@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9BF7C0D5-3137-441E-9FA6-C3FC619209EC}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
+		README = README
 		Terracotta.Ehcache.vsmdi = Terracotta.Ehcache.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection

@@ -1,0 +1,50 @@
+##INTRODUCTION##
+
+This is an attempt at a .Net idiomatic wrapper around the REST interface provided by the [Ehcache Server](http://ehcache.org/documentation/cache_server.html) component of [Ehcache](http://www.ehcache.org).
+
+## FEATURES ##
+
+* An implementation of the non-generic `System.Collections.IDictionary` interface in `AgileWallaby.Ehcache.EhcacheServerDictionary`.
+* An extension of the new `System.Runtime.Caching.ObjectCache` class, `AgileWallaby.Ehcache.EhcacheServerCache` that has been introduced in the .Net 4.0 platform. 
+However I was hoping that this API would be  the same as that implemented by the new [AppFabric caching service](http://msdn.microsoft.com/en-us/library/ff383731.aspx) 
+(formerly known as 'Velocity') a la the Java platform's JCache API however it appears they are different.
+
+## STRUCTURE ##
+
+The following project structure is in effect:
+
+* **AgileWallaby.Ehcache.Net2**: A project that targets the .Net 2.0 platform. This contains the implementation of `AgileWallaby.Ehcache.EhcacheServerDictionary` and related classes.
+In particular it contains the core code that interfaces with the Ehcache Server REST API. This core code is reused by the other projects directly.
+* **AgileWallaby.Ehcache.Net4**: A project that targets the .Net 4.0 platform. This contains the implementation of `AgileWallaby.Ehcache.EhcacheServerCache`. Much of the rest of the code
+is referenced from `AgileWallaby.Ehcache.Net2` via inter-project links, so as to obtain code reuse without requiring multiple assemblies to be referenced.
+* **AgileWallaby.Ehcache.Silverlight**: A project that targets the Silverlight 4 platform. This is very much a work-in-progress and the project does not currently compile.
+ In fact, the solution currently includes but does not load this project.
+* **AgileWallaby.Ehcache.Test**: MSTest project that tests both `AgileWallaby.Ehcache.EhcacheServerDictionary` and `AgileWallaby.Ehcache.EhcacheServerCache`. These tests are mostly
+functional in nature and require an instance of the Ehcache Server to be running.
+
+## USAGE ##
+
+* At the moment no binaries are available. The solution is for Visual Studio 2010 only.
+* Compile the solution.
+* Once you have referenced the assemblies in your own project, instantiate either the `AgileWallaby.Ehcache.EhcacheServerDictionary` or `AgileWallaby.Ehcache.EhcacheServerCache` providing
+it with the URL to the approrpiate Ehcache Server endpoint.
+
+## TESTING ##
+
+* Most (if not all) of the tests that have currently been written expect that an instance of the Ehcache Server is running, with the default configuration (e.g. sampleCache1 and sampleCache2 are 
+referenced extensively).
+* At the moment the URL is hardcoded to the machine name and port for my own development environment so you will need to change this to run the tests yourself.
+
+## TODO ##
+
+1. Complete the Silverlight project.
+2. Support generic `System.Collections.Generic.IDictionary<T>`. 
+3. Finish the extension of `System.Runtime.Caching.CacheItem` that has been begun with `AgileWallaby.Ehcache.EhcacheItem<T>`.
+4. Use Ehcache Server's support for MIME Types to differentiate between JSON and XML encoded cache values. This would tie in #2 and #3.
+5. Make changes to Ehcache Server itself:
+ 1. Such that REST clients can query the endpoint to get a list of all the keys in a particular cache.
+  This will enable this wrapper to implement the various enumeration methods which currently throw `NotImplementException`.
+ 2. Such that alternative serialization mechanisms to JSON and XML are supported, such as [Protocol Buffers](http://code.google.com/p/protobuf) or [Fudge](http://www.fudgemsg.org/display/FDG/Fudge+Messaging+Home).
+ 3. Maybe some sort of Comet or Websocket support such that REST clients (in addition to this .Net one) can subscribe to changes made to cache values.
+6. More documentation.
+7. Whatever else comes up!
