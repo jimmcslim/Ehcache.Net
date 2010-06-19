@@ -1,6 +1,7 @@
 ##INTRODUCTION##
 
 This is an attempt at a .Net idiomatic wrapper around the REST interface provided by the [Ehcache Server](http://ehcache.org/documentation/cache_server.html) component of [Ehcache](http://www.ehcache.org).
+It is licensed under the [Mozilla Public License 1.1 ](http://www.mozilla.org/MPL/).
 
 ## FEATURES ##
 
