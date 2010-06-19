@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1
  *
@@ -24,16 +24,35 @@
  * ***** END LICENSE BLOCK ***** */
 #endregion License
 
+using System;
 using System.IO;
 
 namespace AgileWallaby.Ehcache
 {
-    internal class XmlMetadataSerializationService: IMetadataSerializationService
+    public class XmlSerializer: ISerializer
     {
-        public CacheMetadata GetCacheMetadata(Stream str)
+        public const string XmlContentType = "text/xml";
+    
+        public string ContentType
         {
-            var ser = new System.Xml.Serialization.XmlSerializer(typeof (CacheMetadata));
-            return (CacheMetadata) ser.Deserialize(str);
+            get { return XmlContentType; }
+        }
+
+        public T Deserialize<T>(Stream s) where T : class
+        {
+            System.Xml.Serialization.XmlSerializer ser = new System.Xml.Serialization.XmlSerializer(typeof (T));
+            return (T)ser.Deserialize(s);
+        }
+
+        public object Deserialize(Stream s)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Serialize<T>(Stream s, T value) where T: class
+        {
+            System.Xml.Serialization.XmlSerializer ser = new System.Xml.Serialization.XmlSerializer(typeof (T));
+            ser.Serialize(s, value);
         }
     }
 }

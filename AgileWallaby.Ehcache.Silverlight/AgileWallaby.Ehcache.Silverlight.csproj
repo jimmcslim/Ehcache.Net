@@ -64,9 +64,6 @@
     <Compile Include="..\AgileWallaby.Ehcache.Net2\IEhcacheServerRequest.cs">
       <Link>IEhcacheServerRequest.cs</Link>
     </Compile>
-    <Compile Include="..\AgileWallaby.Ehcache.Net2\ISerializerService.cs">
-      <Link>ISerializerService.cs</Link>
-    </Compile>
     <Compile Include="..\AgileWallaby.Ehcache.Net2\Metadata.cs">
       <Link>Metadata.cs</Link>
     </Compile>

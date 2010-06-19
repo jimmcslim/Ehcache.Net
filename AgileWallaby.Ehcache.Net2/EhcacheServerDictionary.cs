@@ -34,10 +34,13 @@ namespace AgileWallaby.Ehcache
         private readonly IEhcacheServerRequest serverRequest;
         private readonly string cache;
 
-        public EhcacheServerDictionary(Uri endpoint, string cache)
+        public EhcacheServerDictionary(Uri endpoint, string defaultCache)
         {
-            serverRequest = new EhcacheServerRequest(endpoint, cache, SerializerServiceFactory.GetSerializerService());
-            this.cache = cache;
+            var serverRequest = new EhcacheServerRequest(endpoint, defaultCache, SerializerServiceFactory.GetSerializerService());
+            serverRequest.ContentTypeToSerializer[XmlSerializer.XmlContentType] = new XmlSerializer();
+            serverRequest.ContentTypeToSerializer[StringSerializer.StringContentType] = new StringSerializer();
+            this.serverRequest = serverRequest;
+            this.cache = defaultCache;
         }
 
         public bool Contains(object keyObj)
@@ -73,7 +76,8 @@ namespace AgileWallaby.Ehcache
             get
             {
                 var keyStr = RejectKeyIfNotString(keyObj);
-                return serverRequest.GetElement(cache, keyStr);
+                string contentType;
+                return serverRequest.GetElement(cache, keyStr, out contentType);
             }
             set
             {

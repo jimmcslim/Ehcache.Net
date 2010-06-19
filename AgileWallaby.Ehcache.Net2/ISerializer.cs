@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1
  *
@@ -28,12 +28,29 @@ using System.IO;
 
 namespace AgileWallaby.Ehcache
 {
-    internal class XmlMetadataSerializationService: IMetadataSerializationService
+    /// <summary>
+    /// An interface for abstracting serialization and deserialization of objects to and from streams.
+    /// </summary>
+    public interface ISerializer
     {
-        public CacheMetadata GetCacheMetadata(Stream str)
-        {
-            var ser = new System.Xml.Serialization.XmlSerializer(typeof (CacheMetadata));
-            return (CacheMetadata) ser.Deserialize(str);
-        }
+        /// <summary>
+        /// Indicates the content type that the implementation outputs.
+        /// </summary>
+        string ContentType { get; }
+
+        /// <summary>
+        /// Deserializes the generic type from the stream.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        T Deserialize<T>(Stream s) where T : class;
+
+        object Deserialize(Stream s);
+
+        /// <summary>
+        /// Serializes the generic type to the stream.
+        /// </summary>
+        void Serialize<T>(Stream s, T value) where T: class;
     }
 }

@@ -42,10 +42,19 @@ namespace AgileWallaby.Ehcache
             this.endpoint = endpoint;
             this.defaultCache = defaultCache;
             this.serializerService = serializerService;
+            ContentTypeToSerializer = new Dictionary<string, ISerializer>();
+            TypeToSerializer = new Dictionary<Type, ISerializer>();
             Timeout = 10*1000;
+
+            DefaultSerializer = new StringSerializer();
         }
 
         public int Timeout { get; set; }
+
+        public Dictionary<string, ISerializer> ContentTypeToSerializer { get; private set; }
+        public Dictionary<Type, ISerializer> TypeToSerializer { get; private set; }
+        public ISerializer DefaultSerializer { get; set; }
+
 
         public int GetCount(string cache)
         {
@@ -90,7 +99,7 @@ namespace AgileWallaby.Ehcache
             }
         }
 
-        public string GetElement(string cache, string key)
+        public string GetElement(string cache, string key, out string contentType)
         {
             if (key == null)
             {
@@ -104,6 +113,8 @@ namespace AgileWallaby.Ehcache
                 resp = (HttpWebResponse)request.GetResponse();
 
                 //TODO: Check if the key is there.
+
+                contentType = resp.ContentType;
 
                 using (var str = resp.GetResponseStream())
                 using (var sr = new StreamReader(str))
