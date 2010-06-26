@@ -26,7 +26,6 @@
 
 using System.IO;
 using System.Runtime.Serialization.Json;
-using System.Xml.Serialization;
 
 namespace AgileWallaby.Ehcache
 {
@@ -61,7 +60,7 @@ namespace AgileWallaby.Ehcache
     {
         public string Serialize<T>(T value)
         {
-            var ser = new XmlSerializer(typeof (T));
+            var ser = new System.Xml.Serialization.XmlSerializer(typeof (T));
             TextWriter tw = new StringWriter();
             ser.Serialize(tw, value);
             tw.Close();
@@ -70,7 +69,7 @@ namespace AgileWallaby.Ehcache
 
         public T Deserialize<T>(string serializedValue)
         {
-            var ser = new XmlSerializer(typeof (T));
+            var ser = new System.Xml.Serialization.XmlSerializer(typeof (T));
             using (var sr = new StringReader(serializedValue))
             {
                 return (T) ser.Deserialize(sr);

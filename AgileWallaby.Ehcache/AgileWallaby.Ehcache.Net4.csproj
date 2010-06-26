@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AgileWallaby.Ehcache.Net2\CacheServerException.cs">
+      <Link>CacheServerException.cs</Link>
+    </Compile>
+    <Compile Include="..\AgileWallaby.Ehcache.Net2\EhcacheServerDictionary.cs">
+      <Link>EhcacheServerDictionary.cs</Link>
+    </Compile>
     <Compile Include="..\AgileWallaby.Ehcache.Net2\EhcacheServerRequest.cs">
       <Link>EhcacheServerRequest.cs</Link>
     </Compile>
@@ -52,14 +58,20 @@
     <Compile Include="..\AgileWallaby.Ehcache.Net2\IMetadataSerializationService.cs">
       <Link>IMetadataSerializationService.cs</Link>
     </Compile>
+    <Compile Include="..\AgileWallaby.Ehcache.Net2\ISerializer.cs">
+      <Link>ISerializer.cs</Link>
+    </Compile>
     <Compile Include="..\AgileWallaby.Ehcache.Net2\Metadata.cs">
       <Link>Metadata.cs</Link>
     </Compile>
-    <Compile Include="..\AgileWallaby.Ehcache.Net2\SerializerServiceFactory.cs">
-      <Link>SerializerServiceFactory.cs</Link>
+    <Compile Include="..\AgileWallaby.Ehcache.Net2\StringSerializer.cs">
+      <Link>StringSerializer.cs</Link>
     </Compile>
     <Compile Include="..\AgileWallaby.Ehcache.Net2\XmlMetadataSerializationService.cs">
       <Link>XmlMetadataSerializationService.cs</Link>
+    </Compile>
+    <Compile Include="..\AgileWallaby.Ehcache.Net2\XmlSerializer.cs">
+      <Link>XmlSerializer.cs</Link>
     </Compile>
     <Compile Include="EhcacheItem.cs" />
     <Compile Include="EhcacheServerCache.cs" />

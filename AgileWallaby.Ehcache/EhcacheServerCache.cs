@@ -39,7 +39,7 @@ namespace AgileWallaby.Ehcache
 
         public EhcacheServerCache(Uri endpoint, string defaultCache = null)
         {
-            serverRequest = new EhcacheServerRequest(endpoint, defaultCache, SerializerServiceFactory.GetSerializerService());
+            serverRequest = new EhcacheServerRequest(endpoint, defaultCache, new XmlMetadataSerializationService());
             this.defaultCache = defaultCache;
             Timeout = 10*1000;
         }
@@ -94,18 +94,21 @@ namespace AgileWallaby.Ehcache
 
         public override object Get(string key, string regionName)
         {
-            return GetElement(regionName, key);
+            string contentType;
+            return GetElement(regionName, key, out contentType);
         }
 
         public override CacheItem GetCacheItem(string key, string regionName)
         {
-            var value = GetElement(regionName, key);
+            string contentType;
+            var value = GetElement(regionName, key, out contentType);
             return new CacheItem(key, value,  regionName == null ? defaultCache : regionName);
         }
 
         public EhcacheItem<T> GetCacheItem<T>(string key, string regionName)
         {
-            var value = GetElement(regionName, key);
+            string contentType;
+            var value = GetElement(regionName, key, out contentType);
             return new EhcacheItem<T>(key, (T)value, regionName);
         }
 
@@ -119,7 +122,7 @@ namespace AgileWallaby.Ehcache
             Set(item, policy);
         }
 
-        public override void Set(string key, object value, CacheItemPolicy policy, string regionName)
+        public override void Set(string key, object value, CacheItemPolicy policy, string regionName = null)
         {
             var item = new CacheItem(key, value);
             Set(item, policy);
@@ -135,7 +138,7 @@ namespace AgileWallaby.Ehcache
             
         }
 
-        public override IDictionary<string, object> GetValues(IEnumerable<string> keys, string regionName)
+        public override IDictionary<string, object> GetValues(IEnumerable<string> keys, string regionName = null)
         {
             var results = new Dictionary<string, object>();
             foreach (var key in keys)
@@ -192,7 +195,11 @@ namespace AgileWallaby.Ehcache
 
         public override object this[string key]
         {
-            get { return GetElement(defaultCache, key); }
+            get
+            {
+                string contentType;
+                return GetElement(defaultCache, key, out contentType);
+            }
             set { PutElement(defaultCache, key, value.ToString(), "text/plain"); }
         }
 
@@ -201,9 +208,9 @@ namespace AgileWallaby.Ehcache
             serverRequest.PutElement(regionName, key, serializedValue, contentType, timeToLive);
         }
 
-        private object GetElement(string regionName, string key)
+        private object GetElement(string regionName, string key, out string contentType)
         {
-            return serverRequest.GetElement(regionName, key);
+            return serverRequest.GetElement(regionName, key, out contentType);
         }
     }
 }

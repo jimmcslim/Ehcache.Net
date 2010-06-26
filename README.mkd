@@ -1,7 +1,8 @@
 ##INTRODUCTION##
 
 This is an attempt at a .Net idiomatic wrapper around the REST interface provided by the [Ehcache Server](http://ehcache.org/documentation/cache_server.html) component of [Ehcache](http://www.ehcache.org).
-It is licensed under the [Mozilla Public License 1.1 ](http://www.mozilla.org/MPL/).
+In other words, if you want a .Net application to act as a client to the Ehcache Server then this will provide you access to such functionality using patterns and classes that should be familiar to you
+as a .Net developer. It is licensed under the [Mozilla Public License 1.1 ](http://www.mozilla.org/MPL/).
 
 ## FEATURES ##
 

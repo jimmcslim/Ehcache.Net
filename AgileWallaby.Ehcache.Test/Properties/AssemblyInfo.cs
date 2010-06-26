@@ -30,10 +30,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AgileWallaby.Ehcache.Test")]
+[assembly: AssemblyTitle("AgileWallaby.Ehcache.Test.Net2")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly:AssemblyCompany("Agile Wallaby")]
 [assembly: AssemblyProduct("AgileWallaby.Ehcache")]
 [assembly: AssemblyCopyright("Copyright © James Webster 2010. Licensed under the Mozilla Public License 1.1")]
 [assembly: AssemblyTrademark("")]

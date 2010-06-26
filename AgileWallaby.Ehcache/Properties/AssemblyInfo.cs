@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("AgileWallaby.Ehcache.Net4")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly:AssemblyCompany("Agile Wallaby")]
 [assembly: AssemblyProduct("AgileWallaby.Ehcache")]
 [assembly: AssemblyCopyright("Copyright © James Webster 2010")]
 [assembly: AssemblyTrademark("")]
