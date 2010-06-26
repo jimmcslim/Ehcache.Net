@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1
  *
@@ -24,13 +24,16 @@
  * ***** END LICENSE BLOCK ***** */
 #endregion License
 
+using System;
+using System.IO;
+
 namespace AgileWallaby.Ehcache
 {
-    internal class SerializerServiceFactory
+    internal class XmlMetadataSerializationService: IMetadataSerializationService
     {
-        internal static IMetadataSerializationService GetSerializerService()
+        public CacheMetadata GetCacheMetadata(Stream str)
         {
-            return new XmlMetadataSerializationService();       
+            throw new NotImplementedException();
         }
     }
 }

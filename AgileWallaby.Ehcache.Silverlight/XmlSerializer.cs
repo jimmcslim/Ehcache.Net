@@ -25,20 +25,32 @@
 #endregion License
 
 using System;
-using System.Collections.Generic;
+using System.IO;
 
 namespace AgileWallaby.Ehcache
 {
-    internal interface IEhcacheServerRequest
+    public class XmlSerializer: ISerializer
     {
-        string GetElement(string cache, string key, out string contentType);
-        void PutElement(string cache, string key, string serializedValue, string contentType, int? timeToLive = null);
-        int Timeout { get; set; }
-        int GetCount(string cache);
-        bool Contains(string cache, string key);
-        object Remove(string cache, string key);
+        public const string XmlContentType = "text/xml";
 
-        Dictionary<string, ISerializer> ContentTypeToSerializer { get; }
-        Dictionary<Type, ISerializer> TypeToSerializer { get; }
+        public string ContentType
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public T Deserialize<T>(Stream s) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Deserialize(Stream s)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Serialize<T>(Stream s, T value) where T : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }

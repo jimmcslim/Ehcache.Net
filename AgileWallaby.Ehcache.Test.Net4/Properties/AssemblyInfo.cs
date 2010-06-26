@@ -30,10 +30,9 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AgileWallaby.Ehcache.Net2")]
+[assembly: AssemblyTitle("AgileWallaby.Ehcache.Test.Net4")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly:AssemblyCompany("Agile Wallaby")]
 [assembly: AssemblyProduct("AgileWallaby.Ehcache")]
 [assembly: AssemblyCopyright("Copyright © James Webster 2010. Licensed under the Mozilla Public License 1.1")]
 [assembly: AssemblyTrademark("")]
@@ -45,7 +44,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6b4a7b02-15b6-4526-b346-035cee4e3c6b")]
+[assembly: Guid("acae8fbc-0c77-4289-8e6a-1d7ce117d728")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -56,6 +55,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

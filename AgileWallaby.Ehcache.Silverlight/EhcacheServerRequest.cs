@@ -59,7 +59,7 @@ namespace AgileWallaby.Ehcache
         public int GetCount(string cache)
         {
             var req = CreateWebRequestForCache("GET", cache);
-            var resp = req.GetResponse();
+            var resp = GetResponse(req);
             using (var respStream = resp.GetResponseStream())
             {
                 CacheMetadata cacheMetadata = serializerService.GetCacheMetadata(respStream);
@@ -78,7 +78,7 @@ namespace AgileWallaby.Ehcache
             try
             {
                 req.ContentLength = 0;
-                resp = req.GetResponse();
+                resp = GetResponse(req);
                 resp.GetResponseStream().Close();
                 return true;
             }
@@ -106,14 +106,13 @@ namespace AgileWallaby.Ehcache
                 throw new ArgumentNullException("key");
             }
 
-            var request = CreateWebRequestForCacheElement("GET", cache, key);
+            var req = CreateWebRequestForCacheElement("GET", cache, key);
             HttpWebResponse resp = null;
             try
             {
-                resp = (HttpWebResponse)request.GetResponse();
+                resp = GetResponse(req);
 
                 //TODO: Check if the key is there.
-
                 contentType = resp.ContentType;
 
                 using (var str = resp.GetResponseStream())
@@ -141,15 +140,15 @@ namespace AgileWallaby.Ehcache
 
         public void PutElement(string cache, string key, string serializedValue, string contentType, int? timeToLive = null)
         {
-            var request = CreateWebRequestForCacheElement("PUT", cache, key);
+            var req = CreateWebRequestForCacheElement("PUT", cache, key);
             if (timeToLive != null)
             {
-                request.Headers.Add("ehcacheTimeToLive", timeToLive.ToString());
+                req.Headers["ehcacheTimeToLive"] = timeToLive.ToString();
             }
 
-            request.ContentType = contentType;
-            request.ContentLength = serializedValue.Length;
-            using (var stream = request.GetRequestStream())
+            req.ContentType = contentType;
+            req.ContentLength = serializedValue.Length;
+            using (var stream = GetRequestStream(req))
             using (var sw = new StreamWriter(stream))
             {
                 sw.Write(serializedValue);
@@ -157,15 +156,15 @@ namespace AgileWallaby.Ehcache
 
             try
             {
-                request.GetResponse().GetResponseStream().Close();
+                GetResponse(req).GetResponseStream().Close();
             }
             catch (WebException e)
             {
                 if (IsResponseExceptionHttp404NotFound(e))
                 {
-                    var ex = new ArgumentOutOfRangeException("cache", cache,
-                        string.Format("The cache server could not respond to the Uri {0} as there is no cache {1} configured.", request.RequestUri, cache));
-                    ex.Data["Uri"] = request.RequestUri;
+                    var ex = new ArgumentOutOfRangeException("cache",
+                        string.Format("The cache server could not respond to the Uri {0} as there is no cache {1} configured.", req.RequestUri, cache));
+                    ex.Data["Uri"] = req.RequestUri;
                     throw ex;
                 }
                 throw e;
@@ -176,7 +175,7 @@ namespace AgileWallaby.Ehcache
         {
             var req = CreateWebRequestForCacheElement("DELETE", cache, key);
             req.ContentLength = 0;
-            var resp = (HttpWebResponse)req.GetResponse();
+            var resp = GetResponse(req);
             resp.GetResponseStream().Close();
             if (resp.StatusCode != HttpStatusCode.NoContent)
             {
@@ -191,7 +190,7 @@ namespace AgileWallaby.Ehcache
 
         private bool IsResponseExceptionHttp404NotFound(WebException e)
         {
-            if (e.Status == WebExceptionStatus.ProtocolError)
+            if (e.Status == WebExceptionStatus.ConnectFailure)
             {
                 var resp = (HttpWebResponse)e.Response;
                 return resp.StatusCode == HttpStatusCode.NotFound;
@@ -205,7 +204,6 @@ namespace AgileWallaby.Ehcache
             var uri = new Uri(endpoint + "/" + cache + "/" + key);
             var req = WebRequest.Create(uri);
             req.Method = method;
-            req.Timeout = Timeout;
             return (HttpWebRequest)req;
         }
 
@@ -215,8 +213,32 @@ namespace AgileWallaby.Ehcache
             var uri = new Uri(endpoint + "/" + cache);
             var req = WebRequest.Create(uri);
             req.Method = method;
-            req.Timeout = Timeout;
             return (HttpWebRequest)req;
+        }
+
+        private HttpWebResponse GetResponse(HttpWebRequest req)
+        {
+            var asyncResult = req.BeginGetResponse(null, null);
+            var hasNotTimedOut = asyncResult.AsyncWaitHandle.WaitOne(Timeout*1000);
+            if (!hasNotTimedOut)
+            {
+                throw new CacheServerException("Timed out");
+            }
+
+            return (HttpWebResponse) req.EndGetResponse(asyncResult);
+        }
+
+        private Stream GetRequestStream(HttpWebRequest req)
+        {
+            var asyncResult = req.BeginGetRequestStream(null, null);
+            var hasNotTimedOut = asyncResult.AsyncWaitHandle.WaitOne(Timeout*1000);
+            if (!hasNotTimedOut)
+            {
+                // TODO: Not really an issue with the cache server.
+                throw new CacheServerException("Could not get request stream");
+            }
+
+            return req.EndGetRequestStream(asyncResult);
         }
     }
 }

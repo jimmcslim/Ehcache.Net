@@ -36,7 +36,7 @@ namespace AgileWallaby.Ehcache
 
         public EhcacheServerDictionary(Uri endpoint, string defaultCache)
         {
-            var serverRequest = new EhcacheServerRequest(endpoint, defaultCache, SerializerServiceFactory.GetSerializerService());
+            var serverRequest = new EhcacheServerRequest(endpoint, defaultCache, new XmlMetadataSerializationService());
             serverRequest.ContentTypeToSerializer[XmlSerializer.XmlContentType] = new XmlSerializer();
             serverRequest.ContentTypeToSerializer[StringSerializer.StringContentType] = new StringSerializer();
             this.serverRequest = serverRequest;
