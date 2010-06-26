@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Browser;
 
 namespace AgileWallaby.Ehcache
 {
@@ -45,7 +46,6 @@ namespace AgileWallaby.Ehcache
             ContentTypeToSerializer = new Dictionary<string, ISerializer>();
             TypeToSerializer = new Dictionary<Type, ISerializer>();
             Timeout = 10*1000;
-
             DefaultSerializer = new StringSerializer();
         }
 
@@ -54,7 +54,6 @@ namespace AgileWallaby.Ehcache
         public Dictionary<string, ISerializer> ContentTypeToSerializer { get; private set; }
         public Dictionary<Type, ISerializer> TypeToSerializer { get; private set; }
         public ISerializer DefaultSerializer { get; set; }
-
 
         public int GetCount(string cache)
         {
@@ -202,7 +201,7 @@ namespace AgileWallaby.Ehcache
         {
             cache = cache ?? defaultCache;
             var uri = new Uri(endpoint + "/" + cache + "/" + key);
-            var req = WebRequest.Create(uri);
+            var req = WebRequestCreator.ClientHttp.Create(uri);
             req.Method = method;
             return (HttpWebRequest)req;
         }
@@ -211,7 +210,7 @@ namespace AgileWallaby.Ehcache
         {
             cache = cache ?? defaultCache;
             var uri = new Uri(endpoint + "/" + cache);
-            var req = WebRequest.Create(uri);
+            var req = WebRequestCreator.ClientHttp.Create(uri);
             req.Method = method;
             return (HttpWebRequest)req;
         }
@@ -219,7 +218,7 @@ namespace AgileWallaby.Ehcache
         private HttpWebResponse GetResponse(HttpWebRequest req)
         {
             var asyncResult = req.BeginGetResponse(null, null);
-            var hasNotTimedOut = asyncResult.AsyncWaitHandle.WaitOne(Timeout*1000);
+            var hasNotTimedOut = asyncResult.AsyncWaitHandle.WaitOne(Timeout);
             if (!hasNotTimedOut)
             {
                 throw new CacheServerException("Timed out");
@@ -231,7 +230,7 @@ namespace AgileWallaby.Ehcache
         private Stream GetRequestStream(HttpWebRequest req)
         {
             var asyncResult = req.BeginGetRequestStream(null, null);
-            var hasNotTimedOut = asyncResult.AsyncWaitHandle.WaitOne(Timeout*1000);
+            var hasNotTimedOut = asyncResult.AsyncWaitHandle.WaitOne(Timeout);
             if (!hasNotTimedOut)
             {
                 // TODO: Not really an issue with the cache server.

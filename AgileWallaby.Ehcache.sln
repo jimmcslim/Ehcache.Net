@@ -20,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileWallaby.Ehcache.Silver
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileWallaby.Ehcache.Test.Net4", "AgileWallaby.Ehcache.Test.Net4\AgileWallaby.Ehcache.Test.Net4.csproj", "{87F26C33-3BAF-466A-BD9E-1B1A8BE7002E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileWallaby.Ehcache.Test.Silverlight", "AgileWallaby.Ehcache.Test.Silverlight\AgileWallaby.Ehcache.Test.Silverlight.csproj", "{A663FACB-529F-4944-8F2E-AC5F1B20CFA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileWallaby.Ehcache.Test.Silverlight.Web", "AgileWallaby.Ehcache.Test.Silverlight.Web\AgileWallaby.Ehcache.Test.Silverlight.Web.csproj", "{3BE77A9C-3E37-48FF-A80B-6C1BFC90BFF1}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Terracotta.Ehcache.vsmdi
@@ -49,6 +53,14 @@ Global
 		{87F26C33-3BAF-466A-BD9E-1B1A8BE7002E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87F26C33-3BAF-466A-BD9E-1B1A8BE7002E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87F26C33-3BAF-466A-BD9E-1B1A8BE7002E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A663FACB-529F-4944-8F2E-AC5F1B20CFA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A663FACB-529F-4944-8F2E-AC5F1B20CFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A663FACB-529F-4944-8F2E-AC5F1B20CFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A663FACB-529F-4944-8F2E-AC5F1B20CFA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BE77A9C-3E37-48FF-A80B-6C1BFC90BFF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BE77A9C-3E37-48FF-A80B-6C1BFC90BFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BE77A9C-3E37-48FF-A80B-6C1BFC90BFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BE77A9C-3E37-48FF-A80B-6C1BFC90BFF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
