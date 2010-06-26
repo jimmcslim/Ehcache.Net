@@ -6,4 +6,4 @@ bin
 *.suo
 TestResults
 *.user
-AgileWallaby.Ehcache.Silverlight/Bin
+Bin
