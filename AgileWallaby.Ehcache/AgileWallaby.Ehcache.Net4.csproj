@@ -76,6 +76,7 @@
     <Compile Include="EhcacheItem.cs" />
     <Compile Include="EhcacheServerCache.cs" />
     <Compile Include="ICacheItemSerializer.cs" />
+    <Compile Include="JsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
